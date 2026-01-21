@@ -2,13 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* AI Aggregator Design System - All colors MUST be HSL */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 98%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -36,22 +34,32 @@ All colors MUST be HSL.
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* AI Brand Colors - Light Mode */
+    --perplexity: 263 70% 58%;
+    --perplexity-foreground: 0 0% 100%;
+    --perplexity-muted: 263 30% 95%;
+
+    --gemini: 217 91% 60%;
+    --gemini-foreground: 0 0% 100%;
+    --gemini-muted: 217 50% 95%;
+
+    --chatgpt: 160 84% 39%;
+    --chatgpt-foreground: 0 0% 100%;
+    --chatgpt-muted: 160 30% 95%;
+
+    --claude: 32 95% 44%;
+    --claude-foreground: 0 0% 100%;
+    --claude-muted: 32 50% 95%;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -59,7 +67,7 @@ All colors MUST be HSL.
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 50% 8%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
@@ -83,6 +91,24 @@ All colors MUST be HSL.
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+    /* AI Brand Colors - Dark Mode */
+    --perplexity: 263 70% 65%;
+    --perplexity-foreground: 0 0% 100%;
+    --perplexity-muted: 263 40% 15%;
+
+    --gemini: 217 91% 65%;
+    --gemini-foreground: 0 0% 100%;
+    --gemini-muted: 217 50% 15%;
+
+    --chatgpt: 160 84% 45%;
+    --chatgpt-foreground: 0 0% 100%;
+    --chatgpt-muted: 160 40% 12%;
+
+    --claude: 32 95% 55%;
+    --claude-foreground: 0 0% 100%;
+    --claude-muted: 32 50% 12%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -101,5 +127,28 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.5);
   }
 }
