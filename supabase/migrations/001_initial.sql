@@ -209,3 +209,29 @@ $$;
 CREATE TRIGGER set_updated_at_on_user_api_keys
   BEFORE UPDATE ON public.user_api_keys
   FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
+
+-- ─── get_decrypted_key() ──────────────────────────────────────────────────────
+--
+-- Called by the stream-ai edge function to retrieve and decrypt a user's
+-- API key for a given provider. Accepts the encryption secret as a parameter
+-- to avoid relying on session-level configuration.
+
+CREATE OR REPLACE FUNCTION public.get_decrypted_key(p_provider TEXT, p_secret TEXT)
+RETURNS TEXT LANGUAGE plpgsql SECURITY INVOKER AS $$
+DECLARE result TEXT;
+BEGIN
+  CASE p_provider
+    WHEN 'chatgpt' THEN
+      SELECT pgp_sym_decrypt(openai_key, p_secret) INTO result FROM public.user_api_keys WHERE user_id = auth.uid();
+    WHEN 'claude' THEN
+      SELECT pgp_sym_decrypt(anthropic_key, p_secret) INTO result FROM public.user_api_keys WHERE user_id = auth.uid();
+    WHEN 'gemini' THEN
+      SELECT pgp_sym_decrypt(google_key, p_secret) INTO result FROM public.user_api_keys WHERE user_id = auth.uid();
+    WHEN 'perplexity' THEN
+      SELECT pgp_sym_decrypt(perplexity_key, p_secret) INTO result FROM public.user_api_keys WHERE user_id = auth.uid();
+    ELSE
+      result := NULL;
+  END CASE;
+  RETURN result;
+END;
+$$;
